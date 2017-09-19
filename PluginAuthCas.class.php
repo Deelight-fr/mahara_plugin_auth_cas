@@ -206,6 +206,7 @@ class PluginAuthCas extends PluginAuthLdap {
                 'legend' => get_string ('cassettings', 'auth.cas'),
                 'collapsible' => true,
                 'collapsed' => true,
+                'class' => 'last',
                 'elements' => array(
                     self::CAS_HOSTNAME => array(
                         'type' => 'text',
@@ -298,7 +299,7 @@ class PluginAuthCas extends PluginAuthLdap {
 
         return array(
             'elements' => $elements,
-            'renderer' => 'table'
+            'renderer' => 'div'
         );
 
     }
@@ -311,7 +312,7 @@ class PluginAuthCas extends PluginAuthLdap {
      * @param unknown_type $form
      */
     
-    public static function save_instance_config_options ($values, $form) {
+    public static function save_instance_config_options ($values, Pieform $form) {
  		//pp_error_log('values', $values);
 
         // let parent take care of the LDAP settings and of creating the authinstance if needed

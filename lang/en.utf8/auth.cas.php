@@ -30,7 +30,7 @@ defined ('INTERNAL') || die();
 $string['title'] = 'CAS';
 $string['description'] = 'Authenticate against a CAS SSO server';
 $string['notusable'] = 'You can have only one instance of the CAS authentification plugin';
-
+$string['casconfig'] = 'CAS configuration';
 $string['login'] = 'CAS Login';
 
 $string['plugincasnotinstalled'] = 'Your administrator has not install the CAS authentication plugin';

@@ -186,10 +186,10 @@ class AuthCas extends AuthLdap {
                 // Make sure phpCAS doesn't try to start a new PHP session when connecting to the CAS server (false)
                 if ($this->config['cas_proxy']) {
                     phpCAS::proxy((string)$this->config['cas_version'], $this->config['cas_hostname'],
-                        (int)$this->config['cas_port'], $this->config['cas_baseuri'], false);
+                        (int)$this->config['cas_port'], $this->config['cas_baseuri'], $CFG->wwwroot);
                 } else {
                     phpCAS::client((string)$this->config['cas_version'], $this->config['cas_hostname'],
-                        (int)$this->config['cas_port'], $this->config['cas_baseuri'], false);
+                        (int)$this->config['cas_port'], $this->config['cas_baseuri'], $CFG->wwwroot);
                 }
 
                 if ($this->config['cas_certificatecheck'] && $this->config['cas_certificatepath']) {

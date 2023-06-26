@@ -63,8 +63,6 @@ if (get_field ('auth_installed', 'active', 'name', 'cas') != 1) {
     redirect ();
 }
 
-
-//pp_error_log("start",'');
 $wantsurlpath = param_variable('wantsurl', false);
 $wantsurl = $CFG->wwwroot;
 if (!$SESSION->get ('wantsurl')) {
@@ -82,21 +80,17 @@ if (!preg_match ('/' . $_SERVER['HTTP_HOST'] . '/', $wantsurl)) {
     $wantsurl = $CFG->wwwroot;
 }
 
-//pp_error_log("********************wurl",$wantsurl);
-
 // they are logged in, so they dont need to be here
 if ($USER->is_logged_in ()) {
     $SESSION->set ('wantsurl', null);
     redirect ($wantsurl);
 }
-//pp_error_log("ligne 77",$wantsurl);
 
 
 // make sure there is ONE instance of CAS auth plugin and get it's instance id
 //TODO may be add an institutionname as an optional parameter to have more than
 //one instance allowed
 $instances = auth_instance_get_cas_records ();
-//pp_error_log('',$instances);
 if (count ($instances) == 0) {
     $SESSION->add_error_msg (get_string ('noinstanceofplugincasinstalled', 'auth.cas'));
     redirect ();
@@ -112,25 +106,8 @@ $auth = new AuthCas($instances[0]->id);
 // Connection to CAS server
 $auth->connectCAS ();
 
-//pp_error_log("ligne 85",$wantsurl);
-
-if (phpCAS::CheckAuthentication ()) {
-    // OK let's proceed
-    
-	//remove a php warning about argument 1 of login_submit must be an instance of Pieform  
-	login_submit (new Pieform(array('name'=>'dummy')), array('login_username' => phpCAS::getUser (), 'login_password' => 'not cached'));
-
-    //login_submit (NULL, array('login_username' => phpCAS::getUser (), 'login_password' => 'not cached'));
-    //pp_error_log("retour L_s",$wantsurl);
-    $SESSION->set ('wantsurl', null);
-    redirect ($wantsurl);
-}
-
-//pp_error_log("ligne 88",$wantsurl);
-
 phpCAS::forceAuthentication ();
-//pp_error_log("this line will never be reached","");
-
+login_submit (new Pieform(array('name'=>'dummy')), array('login_username' => phpCAS::getUser(), 'login_password' => 'not cached'));
 
 /**
  * Returns all authentication instances using the CAS method
